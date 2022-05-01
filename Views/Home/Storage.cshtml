@@ -1,0 +1,113 @@
+﻿@model List<PhotoGallery.Data.Photo>
+
+@{
+    ViewBag.Title = "Storage";
+    ViewBag.Msg = ViewBag.Msg;
+}
+
+<!-- Modal -->
+<div class="modal fade" id="addPhotoModal" tabindex="-1" role="dialog" aria-labelledby="addPhotoModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="addPhotoModalLabel">Upload Photo</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="position: absolute;top: 6%;right: 4%; font-size: 30px;">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                @using (Html.BeginForm("UploadPhoto", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+
+                    <div class="dropzone dz-clickable">
+                        <div class="col-sm-12">
+                            <input type="file" id="file" name="file" class="form-control" style="border: none; height: 0%" />
+                        </div>
+                    </div>
+                    <div class="text-center m-t-20">
+                        <button class="btn btn-primary">Upload Now</button>
+                        <button class="btn btn-danger" data-dismiss="modal" aria-label="Close">Cancel</button>
+                    </div>
+                }
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="deletePhotoModal" tabindex="-1" role="dialog" aria-labelledby="deletePhotoModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="deletePhotoModalLabel">Delete Photo</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true" style="position: absolute;top: 6%;right: 4%; font-size: 30px;">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                @using (Html.BeginForm("DeletePhoto", "Home", FormMethod.Post))
+                {
+                    <input type="hidden" name="selectedPhotos" id="selectedPhotos" />
+                    <div class="dropzone dz-clickable">
+                        Are you sure you want to delete the selected photos?
+                    </div>
+                    <div class="text-center m-t-20">
+                        <button class="btn btn-primary">Yes</button>
+                        <button class="btn btn-danger" data-dismiss="modal" aria-label="Close">Cancel</button>
+                    </div>
+                }
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12" style="margin-bottom: 2%">
+        <div class="col-sm-8">
+            <h2>Storage management</h2>
+        </div>
+        <div class="col-sm-4 text-right" style="margin-top: 2%">
+            <button class="btn btn-danger" data-toggle="modal" data-target="#deletePhotoModal">Delete Selected</button>
+            <button class="btn btn-primary" data-toggle="modal" data-target="#addPhotoModal">New Photo</button>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        @* <p> *@
+        @*     Show users file here, with checkbox to select each photo and bulk delete them. *@
+        @*     A button to add a new photo. Perform checks to make sure user don't add extra photos than his free storage. *@
+        @* </p> *@
+
+        <ul>
+            @if (Model.Count > 0)
+            {
+                for (var i = 0; i < Model.Count; i++)
+                {
+                    <li>
+                        <input type="checkbox" id="myCheckbox_@i" data-id="@Model[i].PhotoId" onchange="SelectPhotos(this)" />
+                        <label for="myCheckbox_@i"><img src="@Model[i].PhotoPath" /></label>
+                    </li>
+                }
+            }
+            else
+            {
+                <p>No photos found.</p>
+            }
+        </ul>
+
+    </div>
+</div>
+
+<script>
+    function SelectPhotos(sender) {
+        if ($(sender).prop('checked'))
+            $('#selectedPhotos').val($(sender).attr('data-id') + ',' + $('#selectedPhotos').val());
+        else
+            $('#selectedPhotos').val($('#selectedPhotos').val().replace($(sender).attr('data-id') + ',', ''));
+    }
+</script>

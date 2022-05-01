@@ -1,0 +1,141 @@
+﻿@{
+    ViewBag.Title = "Dashboard";
+}
+
+
+<div class="row" style="height: 500px">
+    <div class="col-md-12">
+       <br /><br />
+
+        <div class="col-md-6">
+            <div id="barChartContainer"></div>
+        </div>
+        <div class="col-md-6">
+            <div id="pieChartContainer"></div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+//    bar chart
+    $(function () {
+        CanvasJS.addColorSet("blueShades",
+            [//colorSet Array
+
+                "#4db8ff",
+                "#006bb3",
+                "#2E8B57",
+                "#3CB371",
+                "#90EE90"
+            ]);
+        var chart = new CanvasJS.Chart("barChartContainer", {
+            colorSet: "blueShades",
+            animationEnabled: true,
+            
+            title: {
+                text: "Weekly Storage Usage"
+            },
+            axisY: {
+                title: "percentage",
+                gridThickness: 0,
+            },
+            data: [
+            {
+                type: "stackedColumn100",
+                legendText: "Free",
+                showInLegend: "true",
+                indexLabel: "#percent %",
+                indexLabelPlacement: "inside",
+                indexLabelFontColor: "white",
+                    dataPoints: @Html.Raw(ViewBag.BarDataPointsFree),
+
+//                dataPoints: [
+//                    { y: 40, label: "Monday" },
+//                    { y: 10, label: "Tuesday" },
+//                    { y: 72, label: "Wednesday" },
+//                    { y: 30, label: "Thursday" },
+//                    { y: 21, label: "Friday" },
+//                    { y: 50, label: "Saturday" },
+//                    { y: 21, label: "Sunday" }
+//                ],
+
+                //You can add dynamic data from the controller as shown below. Check the controller and uncomment the line which generates dataPoints.
+                //dataPoints: @Html.Raw(ViewBag.DataPoints1),
+            },
+            {
+                type: "stackedColumn100",
+                legendText: "Used",
+                showInLegend: "true",
+                indexLabel: "#percent %",
+                indexLabelPlacement: "inside",
+                indexLabelFontColor: "white",
+                dataPoints: @Html.Raw(ViewBag.BarDataPointsUsed),
+
+//                dataPoints: [
+//                    { y: 20, label: "Monday" },
+//                    { y: 14, label: "Tuesday" },
+//                    { y: 40, label: "Wednesday" },
+//                    { y: 43, label: "Thursday" },
+//                    { y: 17, label: "Friday" },
+//                    { y: 50, label: "Saturday" },
+//                    { y: 17, label: "Sunday" }
+//                ],
+
+                //You can add dynamic data from the controller as shown below. Check the controller and uncomment the line which generates dataPoints.
+                //dataPoints: @Html.Raw(ViewBag.DataPoints2),
+            }
+            ]
+        });
+        chart.render();
+    });
+
+// pie chart
+    $(function () {
+        CanvasJS.addColorSet("pinkShades",
+            [//colorSet Array
+                "#ff4d6a",
+                "#ff92a5",
+                "#2E8B57",
+                "#3CB371",
+                "#90EE90"
+            ]);
+        var chart = new CanvasJS.Chart("pieChartContainer", {
+            colorSet: "pinkShades",
+        title: {
+            text: "Total Storage"
+        },
+       
+        animationEnabled: true,
+        legend: {
+            verticalAlign: "center",
+            horizontalAlign: "left",
+            fontSize: 20,
+            fontFamily: "Helvetica"
+        },
+        theme: "light2",
+        data: [
+            {
+                type: "pie",
+                indexLabelFontFamily: "Garamond",
+                indexLabelFontSize: 20,
+                indexLabel: "{label} {y}%",
+                startAngle: -20,
+                showInLegend: true,
+                toolTipContent: "{legendText} {y}%",
+                dataPoints: @Html.Raw(ViewBag.PieDataPoints),
+
+//                dataPoints: [
+//                    { y: 85, legendText: "Used", label: "Used" },
+//                    { y: 15, legendText: "Free", label: "Free" }
+//                ],
+
+                //You can add dynamic data from the controller as shown below. Check the controller and uncomment the line which generates dataPoints.
+                //dataPoints: @Html.Raw(ViewBag.DataPoints),
+            }
+        ]
+    });
+    chart.render();
+});
+</script>

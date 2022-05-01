@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "identityapp1": {
+      "restored": true,
+      "restoreTime": "2022-05-01T16:12:55.1458817Z"
+    },
+    "mssql1": {
+      "restored": true,
+      "restoreTime": "2022-05-01T16:13:22.1852201Z"
+    }
+  },
+  "parameters": {
+    "mssql1.subscriptionId": {
+      "Name": "mssql1.subscriptionId",
+      "Type": "subscription",
+      "Value": "e22b6e3b-4531-462f-bed2-0ecb75082eb4"
+    },
+    "mssql1.resourceGroupName": {
+      "Name": "mssql1.resourceGroupName",
+      "Type": "resourceGroup",
+      "Value": "PhotoGallery20220501210941ResourceGroup"
+    }
+  }
+}
